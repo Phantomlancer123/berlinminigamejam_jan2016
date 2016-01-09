@@ -37,6 +37,12 @@ class Game extends Component {
 
       this.setState(newState);
     });
+    
+    setInterval(() => {
+      this.state.humans.forEach((human) => {
+        human.tick();
+      })
+    }, 100);
   }
 
   onChangeWorld = (what) => {
@@ -54,25 +60,17 @@ class Game extends Component {
   }
 
   spawnNewHuman() {
-    let newState = React.addons.update(this.state, {
-      humans: {
-        $push : [{"x": 5, "y": 2}],
-      }
-    });
-
-    this.setState(newState);
+    this.state.humans.push(<Human x={5} y={2} world={World} />);
+    this.forceUpdate();
+    console.log("spawned new human");
   }
 
   render() {
-    const humans = this.state.humans.map(({x, y}) => {
-      World.spawnNewHuman = this.spawnNewHuman;
-      return <Human key={`human-x{x}-y{y}`} x={x} y={y} world={World} />
-    });
     return (
       <Scene name="game">
         <div className="world">
           <Tilemap tiles={this.state.tiles} placement={this.state.placement} />
-          {humans}
+          {this.state.humans}
         </div>
         <Credits />
         <Button onClick={this.onChangeWorld('food')} type="food" left={264} top={10} />

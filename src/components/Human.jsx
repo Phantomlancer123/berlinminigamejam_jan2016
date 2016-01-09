@@ -29,8 +29,10 @@ class Human extends Component {
     if (!this.isAlive) {
       return;
     }
-    this.needsFood.tick();
-    this.needsHouse.tick();
+    if (!this.needsFood.tick() || !(this.needsHouse.tick()) {
+      this.alive = false;
+      return;
+    }
     if (this.action == null) {
       if (this.needsFood.isCritical()) {
         this.action = new ActionGoToFood(this, this.world);
@@ -69,7 +71,9 @@ class Need {
     this.value++;
     if (this.value > this.max) {
       this.value = this.max;
+      return false;
     }
+    return true;
   }
   
   isImportant() {
