@@ -68,6 +68,32 @@ body {
   cursor: pointer;
 }
 
+.tilemap {
+  position: absolute;
+  left: 160px;
+  top: 300px;
+}
+
+.tile {
+  position: absolute;
+
+  &.tile-tree {
+    background-image: url('../images/tree.png');
+  }
+
+  &.tile-house {
+    background-image: url('../images/house.png');
+  }
+
+  &.tile-berries {
+    background-image: url('../images/berries.png');
+  }
+
+  &.tile-church {
+    background-image: url('../images/church.png');
+  }
+}
+
 .world {
   background-image: url('../images/world.png');
   width: 768px;

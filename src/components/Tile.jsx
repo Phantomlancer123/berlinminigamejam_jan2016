@@ -12,13 +12,13 @@ class Tile extends Component {
     }
 
     const style = {
-      x: this.props.x * this.props.width,
-      y: this.props.y * this.props.height,
+      left: this.props.x * this.props.width,
+      top: this.props.y * this.props.height,
       width: this.props.width,
       height: this.props.height,
     }
 
-    return <div className={`tile tile-${this.props.type}`} />;
+    return <div className={`tile tile-${this.props.type}`} style={style} />;
   }
 }
 
