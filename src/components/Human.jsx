@@ -1,10 +1,14 @@
 import React, {Component} from 'react';
 import GameObject from './GameObject';
+import { tileToPixel, distanceBetween } from 'utils';
 
 class Human extends Component {
-  constructor(props, world) {
+  constructor(props) {
     super(props);
-    this.world = world;
+    this.world = props.world;
+    this.x = props.x;
+    this.y = props.y;
+    this.movementSpeed = 0.05;
     this.needsFood = new Need();
     this.needsHouse = new Need();
     this.hasHouse = false;
@@ -14,12 +18,11 @@ class Human extends Component {
     this.action = null;
   }
   
-  distanceTo(tile) {
-    return 2; // TODO
-  }
-  
   moveTowards(tile) {
-    // TODO;
+    if (this.x < tile.x) x += this.movementSpeed;
+    else if (this.x > tile.x) x -= this.movementSpeed;
+    if (this.y < tile.y) y += this.movementSpeed;
+    else if (this.y > tile.y) y -= this.movementSpeed;
   }
   
   tick() {
@@ -38,6 +41,9 @@ class Human extends Component {
       } else if (this.needsHouse.isImportant()) {
         this.action = new ActionGoToWood(this, this.world);
       } else {
+        if (Math.random() > 0.9) {
+          this.world.spawnNewHuman();
+        }
         this.action = new ActionGoPray(this, this.world);
       }
     }
@@ -45,7 +51,8 @@ class Human extends Component {
   }
   
   render() {
-    return <GameObject />
+    let position = tileToPixel(this);
+    return <GameObject left={position.x} top={position.y}><img src="images/human.png" /></GameObject>
   }
 }
 
@@ -61,7 +68,7 @@ class Need {
   tick() {
     this.value++;
     if (this.value > this.max) {
-      this.value = this.max);
+      this.value = this.max;
     }
   }
   
@@ -111,7 +118,7 @@ class Action {
 class ActionGoToFood extends Action {
   perform(human, world) {
     let nearestFood = world.nearestFoodTo(human);
-    if (human.distanceTo(nearestFood) < 1) {
+    if (distanceBetween(human, nearestFood) < 1) {
       human.action = new ActionCollectFood(nearestFood);
     } else {
       human.moveTowards(nearestFood);
@@ -121,6 +128,7 @@ class ActionGoToFood extends Action {
 
 class ActionCollectFood extends Action {
   constructor(food) {
+    super();
     this.food = food;
   }
   perform(human, world) {
@@ -143,7 +151,7 @@ class ActionEat extends Action {
 class ActionGoToWood extends Action {
   perform (human, world) {
     let nearestTree = world.nearestTreeTo(human);
-    if (human.distanceTo(nearestTree) < 1) {
+    if (distanceBetween(human, nearestTree) < 1) {
       human.action = new ActionCollectWood(nearestTree);
     } else {
       human.moveTowards(nearestTree);
@@ -153,6 +161,7 @@ class ActionGoToWood extends Action {
 
 class ActionCollectWood extends Action {
   constructor(tree) {
+    super();
     this.tree = tree;
   }
   perform(human, world) {
@@ -165,10 +174,11 @@ class ActionCollectWood extends Action {
 
 class ActionGoToEmptyTile extends Action {
   constructor(world) {
+    super();
     this.desiredTile = world.getEmptyTileForHouse();
   }
   perform(human, world) {
-    if (human.distanceTo(this.desiredTile) < 1) {
+    if (distanceBetween(human, this.desiredTile) < 1) {
       human.action = new ActionBuildHouse(this.desiredTile);
     } else {
       human.moveTowards(this.desiredTile);
@@ -178,6 +188,7 @@ class ActionGoToEmptyTile extends Action {
 
 class ActionBuildHouse extends Action {
   constructor(tile) {
+    super();
     this.tile = tile;
   }
   perform(human, world) {
@@ -186,9 +197,9 @@ class ActionBuildHouse extends Action {
   }
 }
 
-class ActionPray extends Action {
+class ActionGoPray extends Action {
   perform (human, world) {
-    if (human.distanceTo(world.churchTile) < 1) {
+    if (distanceBetween(human, world.churchTile) < 1) {
       world.pray();
     } else {
       human.moveTowards(world.churchTile);

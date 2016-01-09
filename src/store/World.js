@@ -1,8 +1,47 @@
 import EventMap from 'eventmap';
 import TileLogic from 'tilelogic';
+import { distanceBetween, randomInt } from 'utils';
 
+const worldWidth = 11;
+const worldHeight = 5;
 const world = new EventMap();
-world.state = new TileLogic(11, 5);
+world.state = new TileLogic(worldWidth, worldHeight);
+
+world.nearestFoodTo = function(human) {
+  let nearestFood = null;
+  let minDistance = 99999;
+  world.state.each(function(x, y, tile) {
+    if (tile != 'food') return;
+    let distance = distanceBetween(human, tile);
+    if (distance < minDistance) {
+      distance = minDistance;
+      nearestFood = tile;
+    }
+  });
+}
+
+world.nearestTreeTo = function(human) {
+  let nearestTree = null;
+  let minDistance = 99999;
+  world.state.each(function(x, y, tile) {
+    if (tile != 'tree') return;
+    let distance = distanceBetween(human, tile);
+    if (distance < minDistance) {
+      distance = minDistance;
+      nearestTree = tile;
+    }
+  });
+}
+
+world.getEmptyTileForHouse = function() {
+  let emptyTile = world.state.tile[0][0]
+  while (emptyTile != 'empty') {
+    let x = randomInt(0, worldWidth);
+    let y = randomInt(0, worldHeight);
+    emptyTile = world.state.tile[x][y];
+  }
+  return emptyTile;
+}
 
 // Diamond shape
 // Top half
