@@ -2,15 +2,16 @@ import React, {Component} from 'react';
 import GameObject from './GameObject';
 
 class Human extends Component {
-  constructor(props) {
+  constructor(props, world) {
     super(props);
+    this.world = world;
     this.needsFood = new Need();
     this.needsHouse = new Need();
     this.hasHouse = false;
     this.food = new Resource();
     this.wood = new Resource();
     this.isAlive = true;
-    this.readyForNewAction = true;
+    this.action = null;
   }
   
   tick() {
@@ -19,19 +20,20 @@ class Human extends Component {
     }
     this.needsFood.tick();
     this.needsHouse.tick();
-    if (this.readyForNewAction) {
+    if (this.action == null) {
       if (this.needsFood.isCritical()) {
-        // get food
+        this.action = new ActionGoToFood(this, this.world);
       } else if (this.needsHouse.isCritical()) {
-        // get house
+        this.action = new ActionGoToWood(this, this.world);
       } else if (this.needsFood.isImportant()) {
-        // get food
+        this.action = new ActionGoToFood(this, this.world);
       } else if (this.needsHouse.isImportant()) {
-        // get house
+        this.action = new ActionGoToWood(this, this.world);
       } else {
-        // pray
+        this.action = new ActionGoPray(this, this.world);
       }
     }
+    this.action.perform(this, this.world);
   }
   
   render() {
@@ -69,6 +71,110 @@ class Resource {
     this.min = 0;
     this.max = 10;
     this.value = 0;
+  }
+  
+  collect() {
+    this.value++;
+    if (this.value > this.max) {
+      this.value = this.max;
+      return true;
+    } else {
+      return false;
+    }
+  }
+  
+  consume() {
+    this.value--;
+    if (this.value < this.min) {
+      this.value = this.min;
+      return true;
+    } else {
+      return false;
+    }
+  }
+}
+
+class Action {
+  perform(human, world) {
+    return;
+  }
+}
+
+class ActionGoToFood extends Action {
+  perform(human, world) {
+    let nearestFood = world.nearestFoodTo(human);
+    if (human.distanceTo(nearestFood) < 1) {
+      human.action = new ActionCollectFood(nearestFood);
+    } else {
+      human.moveTowards(nearestFood);
+    }
+  }
+}
+
+class ActionCollectFood extends Action {
+  constructor(food) {
+    this.food = food;
+  }
+  perform(human, world) {
+    if (!human.food.collect()) {
+      this.food.wasCollected();
+      human.action = new ActionEatFood();
+    }
+  }
+}
+
+class ActionEat extends Action {
+  perform(human, world) {
+    human.needsFood.value--;
+    if (!human.food.consume()) {
+      human.action = null;
+    }
+  }
+}
+
+class ActionGoToWood extends Action {
+  perform (human, world) {
+    let nearestWood = world.nearestWoodTo(human);
+    if (human.distanceTo(nearestWood) < 1) {
+      human.action = new ActionCollectWood(nearestWood);
+    } else {
+      human.moveTowards(nearestWood);
+    }
+  }
+}
+
+class ActionCollectWood extends Action {
+  constructor(wood) {
+    this.wood = wood;
+  }
+  perform(human, world) {
+    if (!human.wood.collect()) {
+      this.wood.wasCollected();
+      human.action = new ActionGoToEmptyTile(world);
+    }
+  }
+}
+
+class ActionGoToEmptyTile extends Action {
+  constructor(world) {
+    this.desiredTile = world.getEmptyTileForHouse();
+  }
+  perform(human, world) {
+    if (human.distanceTo(this.desiredTile) < 1) {
+      human.action = new ActionBuildHouse(this.desiredTile);
+    } else {
+      human.moveTowards(this.desiredTile);
+    }
+  }
+}
+
+class ActionBuildHouse extends Action {
+  constructor(tile) {
+    this.tile = tile;
+  }
+  perform(human, world) {
+    world.buildHouse(tile);
+    human.action = null;
   }
 }
 
