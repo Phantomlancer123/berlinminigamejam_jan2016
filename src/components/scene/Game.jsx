@@ -1,4 +1,4 @@
-import React, {Component} from 'react/addons';
+import React, {Component} from 'react';
 
 import Scene from './Scene';
 import BackgroundImage from '../BackgroundImage';
@@ -40,7 +40,7 @@ class Game extends Component {
     
     setInterval(() => {
       this.state.humans.forEach((human) => {
-        human.tick();
+        // somehow human move
       })
     }, 100);
   }
