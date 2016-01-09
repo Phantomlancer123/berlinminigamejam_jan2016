@@ -15,16 +15,26 @@ class Bar extends Component {
 
     this.state = {
       food: 0,
+      humans: [],
     };
+    
+    this.spawnNewHuman();
+  }
+  
+  spawnNewHuman() {
+    this.state.humans.push({"x": 5, "y": 2});
   }
 
   render() {
-
+    const humans = this.state.humans.map(({x, y}) => {
+      World.spawnNewHuman = this.spawnNewHuman;
+      return <Human x={x} y={y} world={World} />
+    });
     return (
       <Scene name="game">
         <div className="world">
           <Tilemap tiles={World.state} />
-          <Human x={5} y={2} world={World} />
+          {humans}
         </div>
         <Credits />
         <Button type="food" left={264} top={10} />
