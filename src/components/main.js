@@ -10,7 +10,7 @@ import 'console-polyfill';
 import ES6Promise from 'es6-promise';
 ES6Promise.polyfill();
 
-import React, {Component} from 'react';
+import React from 'react';
 
 import 'normalize.css/normalize.css';
 import '../styles/main.less';
