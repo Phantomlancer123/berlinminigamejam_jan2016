@@ -178,4 +178,15 @@ class ActionBuildHouse extends Action {
   }
 }
 
+class ActionPray extends Action {
+  perform (human, world) {
+    if (human.distanceTo(world.churchTile) < 1) {
+      world.pray();
+    } else {
+      human.moveTowards(world.churchTile);
+    }
+    human.action = null;
+  }
+}
+
 export default Human;
