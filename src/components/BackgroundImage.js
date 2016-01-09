@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 class BackgroundImage extends Component {
   static defaultProps = {
-    onClick: function() {}
+    onClick: function() {},
   }
 
   render() {

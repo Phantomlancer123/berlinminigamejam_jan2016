@@ -8,7 +8,7 @@ class Bar extends Component {
     super(props);
 
     this.state = {
-      food: 0
+      food: 0,
     };
   }
 
