@@ -7,6 +7,7 @@
 'use strict';
 var webpack = require('webpack');
 var autoprefixer = require('autoprefixer-core');
+var path = require('path');
 
 module.exports = {
 
@@ -31,9 +32,9 @@ module.exports = {
   resolve: {
     extensions: ['', '.js', '.jsx'],
     alias: {
-      'lib': __dirname + '/lib'
+      'lib': path.join(__dirname, '/lib')
     },
-    root: __dirname + '/src'
+    root: path.join(__dirname, + '/src')
   },
   module: {
     preLoaders: [{
