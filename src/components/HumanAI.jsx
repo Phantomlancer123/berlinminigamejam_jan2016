@@ -17,10 +17,10 @@ class HumanAI {
   
   moveTowards(tile) {
     console.log("player moving from " + this.x + "," + this.y + " to " + tile.x + "," + tile.y);
-    if (this.x < tile.x) x += this.movementSpeed;
-    else if (this.x > tile.x) x -= this.movementSpeed;
-    if (this.y < tile.y) y += this.movementSpeed;
-    else if (this.y > tile.y) y -= this.movementSpeed;
+    if (this.x < tile.x) this.x += this.movementSpeed;
+    else if (this.x > tile.x) this.x -= this.movementSpeed;
+    if (this.y < tile.y) this.y += this.movementSpeed;
+    else if (this.y > tile.y) this.y -= this.movementSpeed;
   }
   
   tick() {
@@ -137,7 +137,7 @@ class ActionCollectFood extends Action {
   }
   perform(human, world) {
     if (!human.food.collect()) {
-      this.food.wasCollected();
+      this.world.trigger("add", this.food.x, this.food.y, "empty");
       human.action = new ActionEatFood();
     }
   }

@@ -19,12 +19,12 @@ world.nearestFoodTo = function(human) {
   let nearestFood = null;
   let minDistance = 99999;
   world.state.each(function(x, y, tile) {
-    console.log("examining tile " + x + "," + y + ": " + tile);
     if (tile != 'berries') return;
-    let distance = distanceBetween(human, tile);
+    let distance = distanceBetween(human, {x, y});
+    console.log("distance to berries: " + distance);
     if (distance < minDistance) {
       distance = minDistance;
-      nearestFood = {x: x, y: y};;
+      nearestFood = {x: x, y: y};
     }
   });
   return nearestFood;
@@ -35,7 +35,7 @@ world.nearestTreeTo = function(human) {
   let minDistance = 99999;
   world.state.each(function(x, y, tile) {
     if (tile != 'tree') return;
-    let distance = distanceBetween(human, tile);
+    let distance = distanceBetween(human, {x, y});
     if (distance < minDistance) {
       distance = minDistance;
       nearestTree = {x: x, y: y};
@@ -52,6 +52,10 @@ world.getEmptyTileForHouse = function() {
     emptyTile = {x: x, y: y};
   }
   return emptyTile;
+}
+
+world.placeTile = function(x, y, type) {
+  world.state.tile[x][y] = type;
 }
 
 // Diamond shape

@@ -74,6 +74,8 @@ class Game extends Component {
           },
         },
       });
+      
+      this.state.world.placeTile(x, y, newType);
 
       this.setState(newState, () => {
         this.setState({
@@ -85,6 +87,7 @@ class Game extends Component {
     setInterval(() => {
       this.state.humanAIs.forEach((human) => {
         human.tick();
+        this.forceUpdate();
       })
     }, 100);
   }
