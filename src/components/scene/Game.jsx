@@ -16,6 +16,7 @@ class Game extends Component {
     this.state = {
       food: 0,
       placement: '',
+      humans: [],
       tiles: World.state,
     };
 
@@ -23,7 +24,19 @@ class Game extends Component {
   }
 
   componentDidMount() {
+    World.on('place', (x, y, type) => {
+      let newState = React.addons.update(this.state, {
+        tiles: {
+          [x]: {
+            [y]: {
+              $set: type,
+            },
+          },
+        },
+      });
 
+      this.setState(newState);
+    });
   }
 
   onChangeWorld = (what) => {
@@ -40,19 +53,20 @@ class Game extends Component {
     };
   }
 
-  spawnNewHuman = () => {
+  spawnNewHuman() {
     let newState = React.addons.update(this.state, {
-      humans : {
+      humans: {
         $push : [{"x": 5, "y": 2}],
       }
     });
+
     this.setState(newState);
   }
 
   render() {
     const humans = this.state.humans.map(({x, y}) => {
       World.spawnNewHuman = this.spawnNewHuman;
-      return <Human x={x} y={y} world={World} />
+      return <Human key={`human-x{x}-y{y}`} x={x} y={y} world={World} />
     });
     return (
       <Scene name="game">
