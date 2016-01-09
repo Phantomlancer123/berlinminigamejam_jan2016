@@ -20,8 +20,16 @@ class Human extends Component {
     this.needsFood.tick();
     this.needsHouse.tick();
     if (this.readyForNewAction) {
-      if (this.needsFood.isCritical) {
-        
+      if (this.needsFood.isCritical()) {
+        // get food
+      } else if (this.needsHouse.isCritical()) {
+        // get house
+      } else if (this.needsFood.isImportant()) {
+        // get food
+      } else if (this.needsHouse.isImportant()) {
+        // get house
+      } else {
+        // pray
       }
     }
   }
