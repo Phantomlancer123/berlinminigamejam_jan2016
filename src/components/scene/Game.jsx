@@ -121,7 +121,7 @@ class Game extends Component {
   render() {
     let humans = this.state.humanAIs.map((human) => {
       let position = tileToPixel(human);
-      return <Human x={position.x} y={position.y} />
+      return <Human x={position.x} y={position.y} image={human.getImage()}/>
     });
     return (
       <Scene name="game">

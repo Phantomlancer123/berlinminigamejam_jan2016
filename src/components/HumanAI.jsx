@@ -15,8 +15,12 @@ class HumanAI {
     this.action = null; 
   }
   
+  getImage() {
+    if (this.isAlive) return "images/human.png";
+    else return "images/grave.png";
+  }
+  
   moveTowards(tile) {
-    console.log("player moving from " + this.x + "," + this.y + " to " + tile.x + "," + tile.y);
     if (this.x < tile.x) this.x += this.movementSpeed;
     else if (this.x > tile.x) this.x -= this.movementSpeed;
     if (this.y < tile.y) this.y += this.movementSpeed;
@@ -29,7 +33,6 @@ class HumanAI {
     }
     if (!this.needsFood.tick() || !(this.needsHouse.tick())) {
       this.alive = false;
-      console.log("human died!");
       return;
     }
     if (this.action == null) {
@@ -42,8 +45,8 @@ class HumanAI {
       } else if (this.needsHouse.isImportant()) {
         this.action = new ActionGoToWood(this, this.world);
       } else {
-        if (Math.random() > 0.9) {
-          //this.world.trigger('spawnNewHuman');
+        if (Math.random() > 0.95) {
+          this.world.trigger('spawnNewHuman');
         }
         this.action = new ActionGoPray(this, this.world);
       }
@@ -56,10 +59,10 @@ class HumanAI {
 class Need {
   constructor() {
     this.min = 0;
-    this.max = 100;
+    this.max = 500;
     this.value = 20;
     this.importantLevel = 50;
-    this.criticalLevel = 85;
+    this.criticalLevel = 100;
   }
   
   tick() {
