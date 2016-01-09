@@ -25,6 +25,10 @@ class Game extends Component {
 
   componentDidMount() {
     this.spawnNewHuman();
+    
+    World.on('spawnNewHuman', () => {
+      this.spawnNewHuman();
+    });
 
     World.on('add', ({x, y, type}) => {
       if (type === 'church' || type === 'house') {

@@ -16,6 +16,7 @@ class HumanAI {
   }
   
   moveTowards(tile) {
+    console.log("player moving from " + this.x + "," + this.y + " to " + tile.x + "," + tile.y);
     if (this.x < tile.x) x += this.movementSpeed;
     else if (this.x > tile.x) x -= this.movementSpeed;
     if (this.y < tile.y) y += this.movementSpeed;
@@ -28,6 +29,7 @@ class HumanAI {
     }
     if (!this.needsFood.tick() || !(this.needsHouse.tick())) {
       this.alive = false;
+      console.log("human died!");
       return;
     }
     if (this.action == null) {
@@ -41,11 +43,12 @@ class HumanAI {
         this.action = new ActionGoToWood(this, this.world);
       } else {
         if (Math.random() > 0.9) {
-          this.world.spawnNewHuman();
+          //this.world.trigger('spawnNewHuman');
         }
         this.action = new ActionGoPray(this, this.world);
       }
     }
+    console.log("human decided to: ", this.action);
     this.action.perform(this, this.world);
   }
 }
@@ -117,6 +120,7 @@ class ActionGoToFood extends Action {
     let nearestFood = world.nearestFoodTo(human);
     if (nearestFood == null) {
       human.action = null;
+      return;
     }
     if (distanceBetween(human, nearestFood) < 1) {
       human.action = new ActionCollectFood(nearestFood);
@@ -153,6 +157,7 @@ class ActionGoToWood extends Action {
     let nearestTree = world.nearestTreeTo(human);
     if (nearestTree == null) {
       human.action = null;
+      return;
     }
     if (distanceBetween(human, nearestTree) < 1) {
       human.action = new ActionCollectWood(nearestTree);
@@ -202,10 +207,10 @@ class ActionBuildHouse extends Action {
 
 class ActionGoPray extends Action {
   perform (human, world) {
-    if (distanceBetween(human, world.churchTile) < 1) {
+    if (distanceBetween(human, world.getChurchTile()) < 1) {
       world.pray();
     } else {
-      human.moveTowards(world.churchTile);
+      human.moveTowards(world.getChurchTile());
     }
     human.action = null;
   }

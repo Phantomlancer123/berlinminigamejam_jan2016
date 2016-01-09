@@ -7,17 +7,26 @@ const worldHeight = 5;
 const world = new EventMap();
 world.state = new TileLogic(worldWidth, worldHeight);
 
+world.getChurchTile = function() {
+  return {x: 5, y: 2};
+}
+
+world.pray = function() {
+  this.prayerPoints++;
+}
+
 world.nearestFoodTo = function(human) {
   let nearestFood = null;
   let minDistance = 99999;
   world.state.each(function(x, y, tile) {
-    if (tile != 'food') return;
+    if (tile != 'berries') return;
     let distance = distanceBetween(human, tile);
     if (distance < minDistance) {
       distance = minDistance;
-      nearestFood = tile;
+      nearestFood = {x: x, y: y};;
     }
   });
+  return nearestFood;
 }
 
 world.nearestTreeTo = function(human) {
@@ -28,9 +37,10 @@ world.nearestTreeTo = function(human) {
     let distance = distanceBetween(human, tile);
     if (distance < minDistance) {
       distance = minDistance;
-      nearestTree = tile;
+      nearestTree = {x: x, y: y};
     }
   });
+  return nearestTree;
 }
 
 world.getEmptyTileForHouse = function() {
@@ -38,7 +48,7 @@ world.getEmptyTileForHouse = function() {
   while (emptyTile != 'empty') {
     let x = randomInt(0, worldWidth);
     let y = randomInt(0, worldHeight);
-    emptyTile = world.state.tile[x][y];
+    emptyTile = {x: x, y: y};
   }
   return emptyTile;
 }
