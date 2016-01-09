@@ -6,6 +6,8 @@ import Button from '../Button';
 import Credits from '../Credits';
 import Tilemap from '../Tilemap';
 import Human from '../Human';
+import HumanAI from '../HumanAI';
+import { tileToPixel } from 'utils';
 
 import World from 'store/World';
 
@@ -16,7 +18,7 @@ class Game extends Component {
     this.state = {
       food: 0,
       placement: '',
-      humans: [],
+      humanAIs: [],
       tiles: World.state,
     };
   }
@@ -39,9 +41,9 @@ class Game extends Component {
     });
     
     setInterval(() => {
-      this.state.humans.forEach((human) => {
+      //this.state.humans.forEach((human) => {
         // somehow human move
-      })
+      //})
     }, 100);
   }
 
@@ -60,17 +62,23 @@ class Game extends Component {
   }
 
   spawnNewHuman() {
-    this.state.humans.push(<Human x={5} y={2} world={World} />);
+    this.state.humanAIs.push(new HumanAI())
     this.forceUpdate();
-    console.log("spawned new human");
+    console.log("spawned new human. humans:")
+    console.log(this.state.humanAIs);
   }
 
   render() {
+    let humans = this.state.humanAIs.map((human) => {
+      let position = tileToPixel(human);
+      return <Human x={position.x} y={position.y} />
+    });
+    console.log(humans);
     return (
       <Scene name="game">
         <div className="world">
           <Tilemap tiles={this.state.tiles} placement={this.state.placement} />
-          {this.state.humans}
+          {humans}
         </div>
         <Credits />
         <Button onClick={this.onChangeWorld('food')} type="food" left={264} top={10} />
