@@ -12,7 +12,7 @@ class Intro extends Component {
   render() {
     return (
       <Scene name="intro">
-        <BackgroundImage onClick={this.switchToGame} src="images/intro.png" />
+        <BackgroundImage onClick={this.switchToGame} src="images/intro.jpg" />
       </Scene>
     );
   }

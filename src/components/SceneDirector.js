@@ -1,6 +1,6 @@
 import World from 'store/World';
 import React, {Component} from 'react';
-import {Bar, Intro} from './scene';
+import {Game, Intro} from './scene';
 
 class SceneDirector extends Component {
   constructor(props) {
@@ -27,7 +27,7 @@ class SceneDirector extends Component {
     var sceneInstance = (() => {
       switch (this.state.scene) {
         case 'Intro': return <Intro />;
-        case 'Bar': return <Bar />;
+        case 'Game': return <Game />;
         default: return null;
       }
     })();
