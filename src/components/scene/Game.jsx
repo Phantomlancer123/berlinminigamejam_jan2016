@@ -25,7 +25,7 @@ class Game extends Component {
 
   componentDidMount() {
     this.spawnNewHuman();
-    
+
     World.on('spawnNewHuman', () => {
       this.spawnNewHuman();
     });
@@ -63,7 +63,7 @@ class Game extends Component {
 
       let newState = React.addons.update(this.state, {
         world: {
-          tiles: {
+          state: {
             tile: {
               [x]: {
                 [y]: {
