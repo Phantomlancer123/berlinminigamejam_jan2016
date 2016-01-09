@@ -123,7 +123,7 @@ class Game extends Component {
     return (
       <Scene name="game">
         <div className="world">
-          <Tilemap tiles={this.state.world.tiles} placement={this.state.placement} />
+          <Tilemap tiles={this.state.world.state} placement={this.state.placement} />
           {humans}
         </div>
         <Credits />
