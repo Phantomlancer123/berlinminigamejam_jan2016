@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import GameObject from './GameObject';
+import { tileToPixel } from 'utils';
 
 class Human extends Component {
   constructor(props) {
@@ -54,7 +55,8 @@ class Human extends Component {
   }
   
   render() {
-    return <GameObject />
+    let position = tileToPixel(this);
+    return <GameObject left={position.x} top={position.y}><img src="images/human.png" /></GameObject>
   }
 }
 
