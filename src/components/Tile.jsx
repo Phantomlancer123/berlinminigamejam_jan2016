@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
+import constants from 'constants';
 
 class Tile extends Component {
   static defaultProps = {
-    width: 64,
-    height: 64,
+    width: constants.tileWidth,
+    height: constants.tileHeight,
   }
 
   render() {
