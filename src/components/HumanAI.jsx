@@ -48,7 +48,6 @@ class HumanAI {
         this.action = new ActionGoPray(this, this.world);
       }
     }
-    console.log("human decided to: ", this.action);
     this.action.perform(this, this.world);
   }
 }
@@ -137,13 +136,13 @@ class ActionCollectFood extends Action {
   }
   perform(human, world) {
     if (!human.food.collect()) {
-      this.world.trigger("add", this.food.x, this.food.y, "empty");
+      world.trigger("add", {x: this.food.x, y: this.food.y, type: "empty"});
       human.action = new ActionEatFood();
     }
   }
 }
 
-class ActionEat extends Action {
+class ActionEatFood extends Action {
   perform(human, world) {
     human.needsFood.value--;
     if (!human.food.consume()) {
