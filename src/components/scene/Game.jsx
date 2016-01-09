@@ -19,11 +19,11 @@ class Game extends Component {
       humans: [],
       tiles: World.state,
     };
-
-    this.spawnNewHuman();
   }
 
   componentDidMount() {
+    this.spawnNewHuman();
+
     World.on('place', (x, y, type) => {
       let newState = React.addons.update(this.state, {
         tiles: {
