@@ -6,7 +6,7 @@ class Viewport extends Component {
 
     this.state = {
       containerWidth: 0,
-      containerHeight: 0
+      containerHeight: 0,
     };
 
     this.updateDimensions = this.updateDimensions.bind(this);
@@ -107,14 +107,14 @@ Viewport.defaultProps = {
   width: 800,
   height: 480,
   mode: 'scaleToFit',
-  center: true
+  center: true,
 };
 
 Viewport.propTypes = {
   width: React.PropTypes.number.isRequired,
   height: React.PropTypes.number.isRequired,
   mode: React.PropTypes.string.isRequired,
-  center: React.PropTypes.bool.isRequired
+  center: React.PropTypes.bool.isRequired,
 };
 
 export default Viewport;

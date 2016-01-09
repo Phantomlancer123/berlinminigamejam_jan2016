@@ -13,7 +13,7 @@ class SceneDirector extends Component {
 
   componentDidMount() {
     World.on('scene', sceneName => {
-      this.setState({scene: sceneName})
+      this.setState({scene: sceneName});
     });
   }
 
