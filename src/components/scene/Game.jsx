@@ -17,7 +17,7 @@ class Bar extends Component {
 
     return (
       <Scene name="game">
-        <BackgroundImage src="images/world.png" />
+        <div className="world" />
         <Credits />
       </Scene>
     );
