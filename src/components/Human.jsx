@@ -2,11 +2,11 @@ import React, {Component} from 'react';
 import GameObject from './GameObject';
 
 class Human extends Component {
-  constructor(props, world, x, y) {
+  constructor(props) {
     super(props);
-    this.world = world;
-    this.x = y;
-    this.y = y;
+    this.world = props.world;
+    this.x = props.x;
+    this.y = props.y;
     this.movementSpeed = 0.05;
     this.needsFood = new Need();
     this.needsHouse = new Need();
