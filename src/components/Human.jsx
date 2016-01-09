@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import GameObject from './GameObject';
-import { tileToPixel } from 'utils';
+import { tileToPixel, distanceBetween } from 'utils';
 
 class Human extends Component {
   constructor(props) {
@@ -16,10 +16,6 @@ class Human extends Component {
     this.wood = new Resource();
     this.isAlive = true;
     this.action = null;
-  }
-  
-  distanceTo(tile) {
-    return sqrt((tile.x - this.x)*(tile.x - this.x) + (tile.y - this.y)*(tile.y - this.y));
   }
   
   moveTowards(tile) {
@@ -122,7 +118,7 @@ class Action {
 class ActionGoToFood extends Action {
   perform(human, world) {
     let nearestFood = world.nearestFoodTo(human);
-    if (human.distanceTo(nearestFood) < 1) {
+    if (distanceBetween(human, nearestFood) < 1) {
       human.action = new ActionCollectFood(nearestFood);
     } else {
       human.moveTowards(nearestFood);
@@ -155,7 +151,7 @@ class ActionEat extends Action {
 class ActionGoToWood extends Action {
   perform (human, world) {
     let nearestTree = world.nearestTreeTo(human);
-    if (human.distanceTo(nearestTree) < 1) {
+    if (distanceBetween(human, nearestTree) < 1) {
       human.action = new ActionCollectWood(nearestTree);
     } else {
       human.moveTowards(nearestTree);
@@ -182,7 +178,7 @@ class ActionGoToEmptyTile extends Action {
     this.desiredTile = world.getEmptyTileForHouse();
   }
   perform(human, world) {
-    if (human.distanceTo(this.desiredTile) < 1) {
+    if (distanceBetween(human, this.desiredTile) < 1) {
       human.action = new ActionBuildHouse(this.desiredTile);
     } else {
       human.moveTowards(this.desiredTile);
@@ -203,7 +199,7 @@ class ActionBuildHouse extends Action {
 
 class ActionGoPray extends Action {
   perform (human, world) {
-    if (human.distanceTo(world.churchTile) < 1) {
+    if (distanceBetween(human, world.churchTile) < 1) {
       world.pray();
     } else {
       human.moveTowards(world.churchTile);
