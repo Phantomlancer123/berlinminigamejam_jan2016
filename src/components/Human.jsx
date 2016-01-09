@@ -2,9 +2,12 @@ import React, {Component} from 'react';
 import GameObject from './GameObject';
 
 class Human extends Component {
-  constructor(props, world) {
+  constructor(props, world, x, y) {
     super(props);
     this.world = world;
+    this.x = y;
+    this.y = y;
+    this.movementSpeed = 0.05;
     this.needsFood = new Need();
     this.needsHouse = new Need();
     this.hasHouse = false;
@@ -15,11 +18,14 @@ class Human extends Component {
   }
   
   distanceTo(tile) {
-    return 2; // TODO
+    return sqrt((tile.x - this.x)*(tile.x - this.x) + (tile.y - this.y)*(tile.y - this.y));
   }
   
   moveTowards(tile) {
-    // TODO;
+    if (this.x < tile.x) x += this.movementSpeed;
+    else if (this.x > tile.x) x -= this.movementSpeed);
+    if (this.y < tile.y) y += this.movementSpeed;
+    else if (this.y > tile.y) y -= this.movementSpeed);
   }
   
   tick() {
@@ -38,6 +44,9 @@ class Human extends Component {
       } else if (this.needsHouse.isImportant()) {
         this.action = new ActionGoToWood(this, this.world);
       } else {
+        if (Math.random() > 0.9) {
+          this.world.spawnNewHuman();
+        }
         this.action = new ActionGoPray(this, this.world);
       }
     }
@@ -186,7 +195,7 @@ class ActionBuildHouse extends Action {
   }
 }
 
-class ActionPray extends Action {
+class ActionGoPray extends Action {
   perform (human, world) {
     if (human.distanceTo(world.churchTile) < 1) {
       world.pray();
