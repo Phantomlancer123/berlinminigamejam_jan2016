@@ -29,7 +29,7 @@ class Human extends Component {
     if (!this.isAlive) {
       return;
     }
-    if (!this.needsFood.tick() || !(this.needsHouse.tick()) {
+    if (!this.needsFood.tick() || !(this.needsHouse.tick())) {
       this.alive = false;
       return;
     }
