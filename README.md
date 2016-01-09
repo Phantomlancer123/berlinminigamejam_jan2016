@@ -1,6 +1,8 @@
 # berlinminigamejam_jan2016
 Berlin Mini Game Jam January 2016
 
+Play here: http://frostney.github.io/berlinminigamejam_jan2016/
+
 # Populous-like
 Don't directly control people. Plant trees, water, etc, people interact with it all.
 In the dark ages.
@@ -9,7 +11,7 @@ Player Actions:
 - Plant trees
 - Plant crops
 - Lightning
- 
+
 Resources:
 - Wood
 - Food
