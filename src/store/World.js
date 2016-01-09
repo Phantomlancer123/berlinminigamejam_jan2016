@@ -36,4 +36,6 @@ world.state.tile[9][4] = 'blocked';
 world.state.tile[10][3] = 'blocked';
 world.state.tile[10][4] = 'blocked';
 
+world.state.tile[5][2] = 'church';
+
 export default world;
