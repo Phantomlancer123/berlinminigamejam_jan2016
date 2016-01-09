@@ -115,6 +115,9 @@ class Action {
 class ActionGoToFood extends Action {
   perform(human, world) {
     let nearestFood = world.nearestFoodTo(human);
+    if (nearestFood == null) {
+      human.action = null;
+    }
     if (distanceBetween(human, nearestFood) < 1) {
       human.action = new ActionCollectFood(nearestFood);
     } else {
@@ -148,6 +151,9 @@ class ActionEat extends Action {
 class ActionGoToWood extends Action {
   perform (human, world) {
     let nearestTree = world.nearestTreeTo(human);
+    if (nearestTree == null) {
+      human.action = null;
+    }
     if (distanceBetween(human, nearestTree) < 1) {
       human.action = new ActionCollectWood(nearestTree);
     } else {

@@ -12,8 +12,7 @@ class Human extends Component {
   }
   
   render() {
-    let position = tileToPixel(this);
-    return <GameObject left={position.x} top={position.y}><img src="images/human.png" /></GameObject>
+    return <GameObject left={this.props.x} top={this.props.y}><img src="images/human.png" /></GameObject>
   }
 }
 

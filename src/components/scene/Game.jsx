@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component} from 'react/addons';
 
 import Scene from './Scene';
 import BackgroundImage from '../BackgroundImage';
@@ -66,9 +66,9 @@ class Game extends Component {
     });
     
     setInterval(() => {
-      //this.state.humans.forEach((human) => {
-        // somehow human move
-      //})
+      this.state.humanAIs.forEach((human) => {
+        human.tick();
+      })
     }, 100);
   }
 
@@ -93,10 +93,9 @@ class Game extends Component {
   }
 
   spawnNewHuman() {
-    this.state.humanAIs.push(new HumanAI())
+    this.state.humanAIs.push(new HumanAI(5, 2, World))
     this.forceUpdate();
-    console.log("spawned new human. humans:")
-    console.log(this.state.humanAIs);
+    console.log("spawned new human, #" + this.state.humanAIs.length);
   }
 
   render() {
@@ -104,7 +103,6 @@ class Game extends Component {
       let position = tileToPixel(human);
       return <Human x={position.x} y={position.y} />
     });
-    console.log(humans);
     return (
       <Scene name="game">
         <div className="world">
