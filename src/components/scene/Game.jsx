@@ -5,6 +5,7 @@ import BackgroundImage from '../BackgroundImage';
 import Button from '../Button';
 import Credits from '../Credits';
 import Tilemap from '../Tilemap';
+import Human from '../Human';
 
 import World from 'store/World';
 
@@ -23,7 +24,7 @@ class Bar extends Component {
       <Scene name="game">
         <div className="world">
           <Tilemap tiles={World.state} />
-          <Human x=5 y=2 world={World} />
+          <Human x={5} y={2} world={World} />
         </div>
         <Credits />
         <Button type="food" left={264} top={10} />

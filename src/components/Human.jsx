@@ -23,9 +23,9 @@ class Human extends Component {
   
   moveTowards(tile) {
     if (this.x < tile.x) x += this.movementSpeed;
-    else if (this.x > tile.x) x -= this.movementSpeed);
+    else if (this.x > tile.x) x -= this.movementSpeed;
     if (this.y < tile.y) y += this.movementSpeed;
-    else if (this.y > tile.y) y -= this.movementSpeed);
+    else if (this.y > tile.y) y -= this.movementSpeed;
   }
   
   tick() {
@@ -70,7 +70,7 @@ class Need {
   tick() {
     this.value++;
     if (this.value > this.max) {
-      this.value = this.max);
+      this.value = this.max;
     }
   }
   
@@ -130,6 +130,7 @@ class ActionGoToFood extends Action {
 
 class ActionCollectFood extends Action {
   constructor(food) {
+    super();
     this.food = food;
   }
   perform(human, world) {
@@ -162,6 +163,7 @@ class ActionGoToWood extends Action {
 
 class ActionCollectWood extends Action {
   constructor(tree) {
+    super();
     this.tree = tree;
   }
   perform(human, world) {
@@ -174,6 +176,7 @@ class ActionCollectWood extends Action {
 
 class ActionGoToEmptyTile extends Action {
   constructor(world) {
+    super();
     this.desiredTile = world.getEmptyTileForHouse();
   }
   perform(human, world) {
@@ -187,6 +190,7 @@ class ActionGoToEmptyTile extends Action {
 
 class ActionBuildHouse extends Action {
   constructor(tile) {
+    super();
     this.tile = tile;
   }
   perform(human, world) {
