@@ -38,7 +38,7 @@ module.exports = {
     alias: {
       'lib': path.join(__dirname, '/lib')
     },
-    root: path.join(__dirname, + '/src')
+    root: path.join(__dirname, '/src')
   },
 
   module: {
