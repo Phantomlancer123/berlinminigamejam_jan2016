@@ -142,22 +142,22 @@ class ActionEat extends Action {
 
 class ActionGoToWood extends Action {
   perform (human, world) {
-    let nearestWood = world.nearestWoodTo(human);
-    if (human.distanceTo(nearestWood) < 1) {
-      human.action = new ActionCollectWood(nearestWood);
+    let nearestTree = world.nearestTreeTo(human);
+    if (human.distanceTo(nearestTree) < 1) {
+      human.action = new ActionCollectWood(nearestTree);
     } else {
-      human.moveTowards(nearestWood);
+      human.moveTowards(nearestTree);
     }
   }
 }
 
 class ActionCollectWood extends Action {
-  constructor(wood) {
-    this.wood = wood;
+  constructor(tree) {
+    this.tree = tree;
   }
   perform(human, world) {
     if (!human.wood.collect()) {
-      this.wood.wasCollected();
+      this.tree.wasCollected();
       human.action = new ActionGoToEmptyTile(world);
     }
   }
