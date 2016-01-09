@@ -69,6 +69,25 @@ body {
   transition: all 400ms;
   background-image: linear-gradient(to bottom, rgb(235, 235, 235), #69969c);
 
+  .icon {
+    margin-left: 12px;
+    width: 56px;
+    height: 56px;
+    background-size: cover;
+
+    &.icon-food {
+      background-image: url('../images/berries.png');
+    }
+
+    &.icon-wood {
+      background-image: url('../images/tree.png');
+    }
+  }
+
+  .caption {
+    text-transform: uppercase;
+  }
+
   &:hover {
     border-color: lighten(#69969c, 10%);
     background-image: linear-gradient(to bottom, rgb(235, 235, 235), lighten(#69969c, 10%));
