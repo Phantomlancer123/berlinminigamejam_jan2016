@@ -14,6 +14,14 @@ class Human extends Component {
     this.action = null;
   }
   
+  distanceTo(tile) {
+    return 2; // TODO
+  }
+  
+  moveTowards(tile) {
+    // TODO;
+  }
+  
   tick() {
     if (!this.isAlive) {
       return;
