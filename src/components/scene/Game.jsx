@@ -19,7 +19,7 @@ class Game extends Component {
       food: 0,
       placement: '',
       humanAIs: [],
-      tiles: World.state,
+      world: World,
     };
   }
 
@@ -62,11 +62,13 @@ class Game extends Component {
       }
 
       let newState = React.addons.update(this.state, {
-        tiles: {
-          tile: {
-            [x]: {
-              [y]: {
-                $set: newType,
+        world: {
+          tiles: {
+            tile: {
+              [x]: {
+                [y]: {
+                  $set: newType,
+                },
               },
             },
           },
@@ -108,7 +110,7 @@ class Game extends Component {
   }
 
   spawnNewHuman() {
-    this.state.humanAIs.push(new HumanAI(5, 2, World))
+    this.state.humanAIs.push(new HumanAI(5, 2, this.state.world))
     this.forceUpdate();
     console.log("spawned new human, #" + this.state.humanAIs.length);
   }
@@ -121,7 +123,7 @@ class Game extends Component {
     return (
       <Scene name="game">
         <div className="world">
-          <Tilemap tiles={this.state.tiles} placement={this.state.placement} />
+          <Tilemap tiles={this.state.world.tiles} placement={this.state.placement} />
           {humans}
         </div>
         <Credits />

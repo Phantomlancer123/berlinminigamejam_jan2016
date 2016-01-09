@@ -19,6 +19,7 @@ world.nearestFoodTo = function(human) {
   let nearestFood = null;
   let minDistance = 99999;
   world.state.each(function(x, y, tile) {
+    console.log("examining tile " + x + "," + y + ": " + tile);
     if (tile != 'berries') return;
     let distance = distanceBetween(human, tile);
     if (distance < minDistance) {
