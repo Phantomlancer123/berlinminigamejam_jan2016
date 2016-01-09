@@ -26,18 +26,43 @@ class Game extends Component {
   componentDidMount() {
     this.spawnNewHuman();
 
-    World.on('place', (x, y, type) => {
+    World.on('add', ({x, y, type}) => {
+      if (type === 'church' || type === 'house') {
+        return;
+      }
+
+
+      let newType = 'empty';
+
+      if (this.state.placement === 'food' && type === 'empty') {
+        newType = 'berries';
+      }
+
+      if (this.state.placement === 'wood' && type === 'empty') {
+        newType = 'tree';
+      }
+
+      if ((type === 'berries' || type === 'tree') && this.state.placement === 'destroy') {
+        newType = 'empty';
+      }
+
       let newState = React.addons.update(this.state, {
         tiles: {
-          [x]: {
-            [y]: {
-              $set: type,
+          tile: {
+            [x]: {
+              [y]: {
+                $set: newType,
+              },
             },
           },
         },
       });
 
-      this.setState(newState);
+      this.setState(newState, () => {
+        this.setState({
+          placement: '',
+        });
+      });
     });
     
     setInterval(() => {
@@ -50,9 +75,15 @@ class Game extends Component {
   onChangeWorld = (what) => {
     return () => {
       if (this.state.placement) {
-        this.setState({
-          placement: '',
-        });
+        if (this.state.placement === what) {
+          this.setState({
+            placement: '',
+          });
+        } else {
+          this.setState({
+            placement: what,
+          });
+        }
       } else {
         this.setState({
           placement: what,
