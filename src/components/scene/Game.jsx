@@ -8,12 +8,32 @@ import Tilemap from '../Tilemap';
 
 import World from 'store/World';
 
-class Bar extends Component {
+class Game extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       food: 0,
+      placement: '',
+      tiles: World.state,
+    };
+  }
+
+  componentDidMount() {
+    
+  }
+
+  onChangeWorld = (what) => {
+    return () => {
+      if (this.state.placement) {
+        this.setState({
+          placement: '',
+        });
+      } else {
+        this.setState({
+          placement: what,
+        });
+      }
     };
   }
 
@@ -22,15 +42,15 @@ class Bar extends Component {
     return (
       <Scene name="game">
         <div className="world">
-          <Tilemap tiles={World.state} />
+          <Tilemap tiles={this.state.tiles} placement={this.state.placement} />
         </div>
         <Credits />
-        <Button type="food" left={264} top={10} />
-        <Button type="wood" left={352} top={10} />
-        <Button type="destroy" left={440} top={10} />
+        <Button onClick={this.onChangeWorld('food')} type="food" left={264} top={10} />
+        <Button onClick={this.onChangeWorld('wood')} type="wood" left={352} top={10} />
+        <Button onClick={this.onChangeWorld('destroy')} type="destroy" left={440} top={10} />
       </Scene>
     );
   }
 }
 
-export default Bar;
+export default Game;

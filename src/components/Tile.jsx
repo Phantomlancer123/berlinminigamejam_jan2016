@@ -19,7 +19,7 @@ class Tile extends Component {
       height: this.props.height,
     }
 
-    return <div className={`tile tile-${this.props.type}`} style={style} />;
+    return <div onClick={this.props.onClick} className={`tile tile-${this.props.type}`} style={style} />;
   }
 }
 

@@ -10,11 +10,16 @@ class Tilemap extends Component {
     };
 
     const tiles = this.props.tiles.map((x, y, type) => {
-      return <Tile type={type} x={x} y={y} />;
+      return <Tile key={`tile-x${x}-y${y}`} type={type} x={x} y={y} />;
     });
 
+    let className = 'tilemap';
+    if (this.props.placement) {
+      className += ` placement placement-${this.props.placement}`;
+    }
+
     return (
-      <div className="tilemap" style={style}>{tiles}</div>
+      <div className={className} style={style}>{tiles}</div>
     );
   }
 }

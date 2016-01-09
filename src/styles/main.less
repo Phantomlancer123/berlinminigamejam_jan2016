@@ -66,10 +66,33 @@ body {
   border: 1px solid #69969c;
   text-align: center;
   cursor: pointer;
+  transition: all 400ms;
+  background-image: linear-gradient(to bottom, rgb(235, 235, 235), #69969c);
+
+  &:hover {
+    border-color: lighten(#69969c, 10%);
+    background-image: linear-gradient(to bottom, rgb(235, 235, 235), lighten(#69969c, 10%));
+  }
+
+  &:active {
+    background-image: linear-gradient(to top, rgb(235, 235, 235), lighten(#69969c, 10%));
+  }
 }
 
 .tilemap {
   position: absolute;
+
+  &.placement-food, &.placement-wood {
+    .tile-empty:hover {
+      outline: 1px solid rgba(255, 255, 255, 0.6);
+    }
+  }
+
+  &.placement-destroy {
+    .tile-house:hover, .tile-tree:hover, .tile-berries:hover {
+      outline: 1px solid rgba(255, 255, 255, 0.6);
+    }
+  }
 }
 
 .tile {
