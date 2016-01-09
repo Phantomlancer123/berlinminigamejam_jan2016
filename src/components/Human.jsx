@@ -9,12 +9,21 @@ class Human extends Component {
     this.hasHouse = false;
     this.food = new Resource();
     this.wood = new Resource();
+    this.isAlive = true;
+    this.readyForNewAction = true;
   }
   
   tick() {
+    if (!this.isAlive) {
+      return;
+    }
     this.needsFood.tick();
     this.needsHouse.tick();
-    if ()
+    if (this.readyForNewAction) {
+      if (this.needsFood.isCritical) {
+        
+      }
+    }
   }
   
   render() {

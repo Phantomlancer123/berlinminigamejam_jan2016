@@ -10,10 +10,10 @@ Player Actions:
 - Plant crops
 - Lightning
  
- Resources:
- - Wood
- - Food
- - People
+Resources:
+- Wood
+- Food
+- People
 
 Gameplay loop:
 - Plant trees
