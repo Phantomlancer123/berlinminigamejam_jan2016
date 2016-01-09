@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component} from 'react/addons';
 
 import Scene from './Scene';
 import BackgroundImage from '../BackgroundImage';
@@ -21,8 +21,13 @@ class Bar extends Component {
     this.spawnNewHuman();
   }
   
-  spawnNewHuman() {
-    this.state.humans.push({"x": 5, "y": 2});
+  spawnNewHuman = () => {
+    let newState = React.addons.update(this.state, {
+      humans : {
+        $push : [{"x": 5, "y": 2}],
+      }
+    });
+    this.setState(newState);
   }
 
   render() {
