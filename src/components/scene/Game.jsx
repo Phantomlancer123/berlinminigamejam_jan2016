@@ -30,11 +30,18 @@ class Game extends Component {
       this.spawnNewHuman();
     });
 
+    const placementToType = (placement) => {
+      switch (placement) {
+        case 'food': return 'berries';
+        case 'wood': return 'tree';
+        default: return 'empty';
+      }
+    };
+
     World.on('add', ({x, y, type}) => {
       if (type === 'church' || type === 'house') {
         return;
       }
-
 
       let newType = 'empty';
 
@@ -44,6 +51,10 @@ class Game extends Component {
 
       if (this.state.placement === 'wood' && type === 'empty') {
         newType = 'tree';
+      }
+
+      if (placementToType(this.state.placement) === type) {
+        return;
       }
 
       if ((type === 'berries' || type === 'tree') && this.state.placement === 'destroy') {
@@ -68,7 +79,7 @@ class Game extends Component {
         });
       });
     });
-    
+
     setInterval(() => {
       this.state.humanAIs.forEach((human) => {
         human.tick();

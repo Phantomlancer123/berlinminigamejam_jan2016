@@ -7,7 +7,7 @@ class SceneDirector extends Component {
     super(props);
 
     this.state = {
-      scene: 'Intro',
+      scene: 'Game',
     };
   }
 
